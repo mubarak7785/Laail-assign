@@ -21,6 +21,28 @@ router.post("", async function (req, res) {
       return res.status(500).send(err.message);
     }
   });
+
+  router.patch('/:id', async (req, res) => {
+    try {
+      const user = await Contracts.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
+  
+      return res.send(user)
+    } catch (err) {
+      return res.status(500).send(err.message)
+    }
+  })
+  
+  router.delete('/:id', async (req, res) => {
+    try {
+      const user = await Contracts.findByIdAndDelete(req.params.id).lean().exec()
+  
+      return res.send(user)
+    } catch (err) {
+      return res.status(500).send(err.message)
+    }
+  })
   
   module.exports = router;
   
